@@ -27,7 +27,12 @@ app.get('/', (req: Request, res: Response) => {
   res.send('InternHub API is running...');
 });
 
-// 启动服务器
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+// 导出 app 供 Vercel 使用
+export default app;
+
+// 仅在非 Vercel 环境下监听端口
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+  });
+}
