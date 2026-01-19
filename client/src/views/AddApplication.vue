@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useApplicationStore } from '../stores/applications';
 import { useRouter } from 'vue-router';
 
@@ -11,6 +11,18 @@ const note = ref('');
 
 const appStore = useApplicationStore();
 const router = useRouter();
+
+const resetForm = () => {
+  company.value = '';
+  position.value = '';
+  status.value = 'applied';
+  date.value = new Date().toISOString().split('T')[0];
+  note.value = '';
+};
+
+onMounted(() => {
+  resetForm();
+});
 
 const handleSubmit = async () => {
   try {
@@ -32,16 +44,16 @@ const handleSubmit = async () => {
   <div class="bg-white shadow sm:rounded-lg">
     <div class="px-4 py-5 sm:p-6">
       <h3 class="text-lg leading-6 font-medium text-gray-900">新增投递记录</h3>
-      <form class="mt-5 space-y-6" @submit.prevent="handleSubmit">
+      <form class="mt-5 space-y-6" @submit.prevent="handleSubmit" autocomplete="off">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <label for="company" class="block text-sm font-medium text-gray-700">公司名称</label>
-            <input type="text" id="company" v-model="company" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <input type="text" id="company" v-model="company" required autocomplete="off" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
           </div>
 
           <div>
             <label for="position" class="block text-sm font-medium text-gray-700">岗位名称</label>
-            <input type="text" id="position" v-model="position" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <input type="text" id="position" v-model="position" required autocomplete="off" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
           </div>
 
           <div>
