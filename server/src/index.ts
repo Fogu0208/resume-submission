@@ -17,8 +17,6 @@ const port = process.env.PORT || 5000;
 // 中间件
 app.use(cors());
 app.use(express.json());
-// 提供前端静态文件  
-app.use(express.static('public'));  
 
 // 路由
 app.use('/api/auth', authRoutes);
